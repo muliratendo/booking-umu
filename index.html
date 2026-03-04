@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMU Unified Booking - Coming Soon</title>
+
+    <!-- Preconnect and Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* 
+     * Core Design System 
+     */
+        :root {
+            /* Dark academic/medical tech theme */
+            --bg-gradient-start: #0f172a;
+            /* Deep navy */
+            --bg-gradient-end: #020617;
+            /* Very dark slate */
+            --text-main: #f8fafc;
+            /* Crisp white */
+            --text-muted: #94a3b8;
+            /* Soft readable gray */
+
+            /* Active colors */
+            --primary: #3b82f6;
+            /* Medical blue */
+            --primary-hover: #2563eb;
+            --primary-glow: rgba(59, 130, 246, 0.4);
+            --accent-glow: rgba(14, 165, 233, 0.3);
+            /* Teal glow */
+
+            /* Glassmorphism */
+            --glass-bg: rgba(15, 23, 42, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-highlight: rgba(255, 255, 255, 0.05);
+
+            /* Status */
+            --success: #10b981;
+            --success-bg: rgba(16, 185, 129, 0.15);
+            --error: #ef4444;
+            --error-bg: rgba(239, 68, 68, 0.15);
+
+            /* Typography */
+            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+            --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 
+     * Background Canvas Layer
+     */
+        #particles-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* 
+     * Global Layout 
+     */
+        .layout-wrapper {
+            position: relative;
+            z-index: 1;
+            /* Above particles */
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* 
+     * Top-left Logo 
+     */
+        .header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .brand-logo {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(90deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: opacity 0.3s;
+        }
+
+        .brand-logo:hover {
+            opacity: 0.8;
+        }
+
+        /* 
+     * Centered Hero Section 
+     */
+        .hero-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 0;
+            width: 100%;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 3.5rem 2.5rem;
+            text-align: center;
+            max-width: 850px;
+            width: 100%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--glass-border) inset;
+            animation: fadeInUp 1s ease-out backwards;
+            animation-delay: 0.2s;
+        }
+
+        /* Typography */
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.25rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.25rem;
+            color: #fff;
+            transition: text-shadow 0.3s ease;
+        }
+
+        .hero-title:hover {
+            text-shadow: 0 0 24px var(--accent-glow);
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+            max-width: 650px;
+            margin-inline: auto;
+        }
+
+        /* Thematic Badges / Modules List */
+        .modules-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+            max-width: 550px;
+            margin-inline: auto;
+            text-align: left;
+        }
+
+        .module-badge {
+            background: var(--glass-highlight);
+            border: 1px solid var(--glass-border);
+            padding: 0.75rem 1.25rem;
+            border-radius: 9999px;
+            /* Pill shape */
+            font-size: 0.95rem;
+            color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .module-badge:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .module-icon {
+            color: var(--primary);
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+
+        /* Countdown Timer */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .countdown-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 80px;
+        }
+
+        .countdown-value {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            width: 100%;
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .countdown-value:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        .countdown-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Value change animation */
+        .digit {
+            display: inline-block;
+            min-width: 2ch;
+        }
+
+        .digit.tick {
+            animation: digitPop 0.3s ease;
+        }
+
+        @keyframes digitPop {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* CTA Area */
+        .cta-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+            position: relative;
+        }
+
+        .cta-button {
+            background: transparent;
+            color: #fff;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 1rem;
+            padding: 1rem 2.5rem;
+            border: 1px solid var(--primary);
+            border-radius: 9999px;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--primary-glow), inset 0 0 10px var(--primary-glow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeIn 1s ease-out backwards;
+            animation-delay: 0.6s;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            background: var(--primary);
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+        }
+
+        /* Notify Form */
+        .notify-form {
+            display: none;
+            opacity: 0;
+            transform: translateY(-10px);
+            width: 100%;
+            max-width: 400px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .notify-form.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+            gap: 0.5rem;
+        }
+
+        .email-input {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            color: #fff;
+            padding: 0.875rem 1.25rem;
+            border-radius: 9999px;
+            /* match button */
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .email-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-glow);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .email-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .submit-button {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.875rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-button:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: absolute;
+            top: calc(100% + 15px);
+            left: 50%;
+            transform: translate(-50%, -10px);
+            font-size: 0.875rem;
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .toast.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, 0);
+        }
+
+        .toast-success {
+            background: var(--success-bg);
+            color: var(--success);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .toast-error {
+            background: var(--error-bg);
+            color: var(--error);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* 
+     * Footer 
+     */
+        .footer {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            animation: fadeInUp 0.8s ease-out backwards;
+            animation-delay: 0.4s;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* 
+     * CSS Animations 
+     */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* 
+     * Responsive Queries 
+     */
+        @media (max-width: 900px) {
+            .countdown {
+                gap: 1rem;
+            }
+
+            .countdown-block {
+                width: 70px;
+            }
+
+            .countdown-value {
+                font-size: 1.75rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .layout-wrapper {
+                padding: 1.5rem;
+            }
+
+            .glass-card {
+                padding: 2.5rem 1.5rem;
+                border-radius: 1.25rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .module-badge {
+                flex-direction: column;
+                text-align: center;
+                border-radius: 1rem;
+                gap: 0.5rem;
+                padding: 1rem;
+            }
+
+            .countdown {
+                gap: 0.5rem;
+            }
+
+            .countdown-block {
+                width: 60px;
+            }
+
+            .countdown-value {
+                font-size: 1.5rem;
+                border-radius: 0.75rem;
+            }
+
+            .countdown-label {
+                font-size: 0.65rem;
+            }
+
+            .notify-form.active {
+                flex-direction: column;
+            }
+
+            .email-input {
+                width: 100%;
+            }
+
+            .submit-button {
+                width: 100%;
+            }
+
+            .footer {
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+            }
+        }
+
+        /* 
+     * Accessibility / Reduced Motion 
+     */
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            ::before,
+            ::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            .countdown-value:hover,
+            .module-badge:hover,
+            .cta-button:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Dynamic Particle Background -->
+    <canvas id="particles-canvas" aria-label="Animated background particles"></canvas>
+
+    <div class="layout-wrapper">
+        <!-- Top-left Branding -->
+        <header class="header">
+            <div class="brand-logo" aria-label="UMU Unified Booking">UMU Unified Booking</div>
+        </header>
+
+        <!-- Main Hero Content -->
+        <main class="hero-section">
+            <div class="glass-card">
+
+                <h1 class="hero-title">Unified Booking for UMU is Coming Soon</h1>
+                <p class="hero-subtitle">
+                    One platform for room booking, hostel allocation, and hospital services &mdash; built for Uganda
+                    Martyrs University and Nkozi Hospital.
+                </p>
+
+                <!-- Thematic Details List -->
+                <div class="modules-list" aria-label="Platform modules">
+                    <div class="module-badge">
+                        <span class="module-icon" aria-hidden="true">✦</span>
+                        <span><strong>Academic Booking:</strong> rooms, labs, equipment, conference hall</span>
+                    </div>
+                    <div class="module-badge">
+                        <span class="module-icon" aria-hidden="true">✦</span>
+                        <span><strong>Hostel Allocation:</strong> semester room and bed assignments</span>
+                    </div>
+                    <div class="module-badge">
+                        <span class="module-icon" aria-hidden="true">✦</span>
+                        <span><strong>Hospital Services:</strong> appointments, consultations, emergency
+                            escalation</span>
+                    </div>
+                </div>
+
+                <!-- Launch Timer -->
+                <div class="countdown" aria-label="Countdown timer to platform launch">
+                    <div class="countdown-block">
+                        <div class="countdown-value"><span class="digit" id="val-days">00</span></div>
+                        <span class="countdown-label">Days</span>
+                    </div>
+                    <div class="countdown-block">
+                        <div class="countdown-value"><span class="digit" id="val-hours">00</span></div>
+                        <span class="countdown-label">Hours</span>
+                    </div>
+                    <div class="countdown-block">
+                        <div class="countdown-value"><span class="digit" id="val-minutes">00</span></div>
+                        <span class="countdown-label">Minutes</span>
+                    </div>
+                    <div class="countdown-block">
+                        <div class="countdown-value"><span class="digit" id="val-seconds">00</span></div>
+                        <span class="countdown-label">Seconds</span>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="cta-area">
+                    <button class="cta-button" id="trigger-notify" aria-expanded="false" aria-controls="notify-form">
+                        Notify Me at Launch
+                    </button>
+
+                    <form class="notify-form" id="notify-form" novalidate>
+                        <input type="email" id="email-input" class="email-input" placeholder="Enter your email address"
+                            aria-label="Email address for launch notification" required>
+                        <button type="submit" class="submit-button" aria-label="Submit email">Submit</button>
+                    </form>
+
+                    <!-- Feedback message container -->
+                    <div id="feedback-toast" class="toast" role="alert" aria-live="assertive"></div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Bottom Text -->
+        <footer class="footer">
+            <div class="footer-text">
+                <p>Designed and built by UMU Computer Science.</p>
+            </div>
+            <div class="footer-text">
+                <p>Running on a Laravel + LEMP stack.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        /**
+         * UMU Unified Booking - Coming Soon Scripts
+         * 1. Countdown Logic
+         * 2. Notify Me Form Interactions
+         * 3. Particles Canvas Implementation
+         */
+
+        // --- 1. COUNTDOWN LOGIC ---
+        // Set an arbitrary launch date: exactly 90 days from execution
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + 90);
+
+        // Cache DOM elements
+        const uiDays = document.getElementById('val-days');
+        const uiHours = document.getElementById('val-hours');
+        const uiMinutes = document.getElementById('val-minutes');
+        const uiSeconds = document.getElementById('val-seconds');
+
+        /**
+         * Updates an individual time digit UI, applying a micro-animation if it changed.
+         */
+        function renderDigit(element, value) {
+            const paddedStr = value.toString().padStart(2, '0');
+            // Only do re-flow / animate if the literal text differs
+            if (element.textContent !== paddedStr) {
+                element.textContent = paddedStr;
+                // Trigger CSS reflow to restart the pop animation
+                element.classList.remove('tick');
+                void element.offsetWidth;
+                element.classList.add('tick');
+            }
+        }
+
+        /**
+         * Computes the difference and renders each segment.
+         */
+        function tickCountdown() {
+            const now = new Date();
+            const diffMs = targetDate - now;
+
+            // Ensure we don't go negative
+            if (diffMs <= 0) {
+                renderDigit(uiDays, 0);
+                renderDigit(uiHours, 0);
+                renderDigit(uiMinutes, 0);
+                renderDigit(uiSeconds, 0);
+                return;
+            }
+
+            // Compute time values
+            const daysStr = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            const hoursStr = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
+            const minutesStr = Math.floor((diffMs / 1000 / 60) % 60);
+            const secondsStr = Math.floor((diffMs / 1000) % 60);
+
+            renderDigit(uiDays, daysStr);
+            renderDigit(uiHours, hoursStr);
+            renderDigit(uiMinutes, minutesStr);
+            renderDigit(uiSeconds, secondsStr);
+        }
+
+        // Start immediately, then every 1 second
+        tickCountdown();
+        setInterval(tickCountdown, 1000);
+
+
+        // --- 2. NOTIFY ME FORM INTERACTIONS ---
+        const triggerNotifyBtn = document.getElementById('trigger-notify');
+        const notifyForm = document.getElementById('notify-form');
+        const emailField = document.getElementById('email-input');
+        const toastElem = document.getElementById('feedback-toast');
+        let toastTimeoutId = null;
+
+        // Handle initial CTA click to reveal form
+        triggerNotifyBtn.addEventListener('click', () => {
+            notifyForm.classList.add('active');
+            triggerNotifyBtn.style.display = 'none'; // hide the initial CTA
+            triggerNotifyBtn.setAttribute('aria-expanded', 'true');
+            emailField.focus(); // help smooth UX
+        });
+
+        // Display inline toast notification
+        function displayToast(message, isSuccess) {
+            toastElem.textContent = message;
+            // Toggle appropriate stylistic classes
+            toastElem.className = 'toast visible ' + (isSuccess ? 'toast-success' : 'toast-error');
+
+            // Hide toast after 4s
+            if (toastTimeoutId) clearTimeout(toastTimeoutId);
+            toastTimeoutId = setTimeout(() => {
+                toastElem.classList.remove('visible');
+            }, 4000);
+        }
+
+        // Handle local JS form submission validation
+        notifyForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // prevent reload
+
+            const emailValue = emailField.value.trim();
+            // Basic fallback regex for email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailValue || !emailRegex.test(emailValue)) {
+                displayToast('Please enter a valid email address.', false);
+            } else {
+                // Simulated success logic
+                displayToast('Thanks! We’ll let you know when we launch.', true);
+                notifyForm.reset();
+
+                // Return UI to original button state after showing toast
+                setTimeout(() => {
+                    notifyForm.classList.remove('active');
+                    triggerNotifyBtn.textContent = 'Notification Set ✓';
+                    triggerNotifyBtn.style.display = 'inline-block';
+                    triggerNotifyBtn.setAttribute('aria-expanded', 'false');
+                }, 1500);
+            }
+        });
+
+
+        // --- 3. PARTICLES CANVAS IMPLEMENTATION ---
+        const cvs = document.getElementById('particles-canvas');
+        const ctx = cvs.getContext('2d');
+
+        let particlesArray = [];
+        let rafId = null;
+
+        // Accessibility check: disable intensive non-essential motion
+        const prefsReducedMotionMatch = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+        function setCanvasDimensions() {
+            cvs.width = window.innerWidth;
+            cvs.height = window.innerHeight;
+            buildParticles();
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * cvs.width;
+                this.y = Math.random() * cvs.height;
+                this.radius = Math.random() * 2 + 0.5; // subtle blur circles
+
+                // If reduced motion is requested, particles move ~80% slower
+                const motionFactor = prefsReducedMotionMatch.matches ? 0.05 : 0.3;
+                this.vx = (Math.random() - 0.5) * motionFactor;
+                this.vy = (Math.random() - 0.5) * motionFactor;
+
+                // Random opacity between 0.1 and 0.4
+                const opacity = (Math.random() * 0.3) + 0.1;
+                // Thematic colors: White, Slate, or Accent Teal
+                const palette = [
+                    `rgba(255, 255, 255, ${opacity})`,
+                    `rgba(148, 163, 184, ${opacity})`,
+                    `rgba(14, 165, 233, ${opacity})`
+                ];
+                this.color = palette[Math.floor(Math.random() * palette.length)];
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Wrap particles gracefully around the screen bounds
+                if (this.x > cvs.width) this.x = 0;
+                else if (this.x < 0) this.x = cvs.width;
+
+                if (this.y > cvs.height) this.y = 0;
+                else if (this.y < 0) this.y = cvs.height;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.closePath();
+            }
+        }
+
+        function buildParticles() {
+            particlesArray = [];
+            // Calculate amount based on screen size
+            const maxParticles = window.innerWidth < 768 ? 40 : 120;
+            // Drastically reduce count for users with reduced motion preferences
+            const activeCount = prefsReducedMotionMatch.matches ? Math.floor(maxParticles / 4) : maxParticles;
+
+            for (let i = 0; i < activeCount; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function renderFrame() {
+            ctx.clearRect(0, 0, cvs.width, cvs.height);
+
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+                particlesArray[i].draw();
+            }
+
+            rafId = requestAnimationFrame(renderFrame);
+        }
+
+        // Bootstrap Canvas Environment
+        window.addEventListener('resize', setCanvasDimensions);
+        prefsReducedMotionMatch.addEventListener('change', buildParticles); // React to OS setting changes
+
+        setCanvasDimensions();
+        renderFrame();
+
+    </script>
+</body>
+
+</html>
