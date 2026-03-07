@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UMU Unified Booking - Coming Soon</title>
+    <title>Booking@UMU - Coming Soon</title>
 
     <!-- Preconnect and Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,34 +18,34 @@
      * Core Design System 
      */
         :root {
-            /* Dark academic/medical tech theme */
-            --bg-gradient-start: #0f172a;
-            /* Deep navy */
-            --bg-gradient-end: #020617;
-            /* Very dark slate */
-            --text-main: #f8fafc;
-            /* Crisp white */
-            --text-muted: #94a3b8;
-            /* Soft readable gray */
+            /* Light academic/medical tech theme */
+            --bg-gradient-start: #ffffff;
+            /* White */
+            --bg-gradient-end: #f1f5f9;
+            /* Light slate */
+            --text-main: #0f172a;
+            /* Dark slate / near-black */
+            --text-muted: #475569;
+            /* Softer gray for light mode */
 
             /* Active colors */
-            --primary: #3b82f6;
+            --primary: #2563eb;
             /* Medical blue */
-            --primary-hover: #2563eb;
-            --primary-glow: rgba(59, 130, 246, 0.4);
-            --accent-glow: rgba(14, 165, 233, 0.3);
+            --primary-hover: #1d4ed8;
+            --primary-glow: rgba(37, 99, 235, 0.2);
+            --accent-glow: rgba(14, 165, 233, 0.2);
             /* Teal glow */
 
             /* Glassmorphism */
-            --glass-bg: rgba(15, 23, 42, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --glass-highlight: rgba(255, 255, 255, 0.05);
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(0, 0, 0, 0.05);
+            --glass-highlight: rgba(0, 0, 0, 0.02);
 
             /* Status */
-            --success: #10b981;
-            --success-bg: rgba(16, 185, 129, 0.15);
-            --error: #ef4444;
-            --error-bg: rgba(239, 68, 68, 0.15);
+            --success: #059669;
+            --success-bg: rgba(16, 185, 129, 0.1);
+            --error: #dc2626;
+            --error-bg: rgba(239, 68, 68, 0.1);
 
             /* Typography */
             --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -114,7 +114,7 @@
             font-size: 1.25rem;
             font-weight: 700;
             letter-spacing: -0.02em;
-            background: linear-gradient(90deg, #ffffff 0%, #cbd5e1 100%);
+            background: linear-gradient(90deg, var(--text-main) 0%, var(--primary) 100%);
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -139,16 +139,16 @@
         }
 
         .glass-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
             border: 1px solid var(--glass-border);
             border-radius: 1.5rem;
             padding: 3.5rem 2.5rem;
             text-align: center;
             max-width: 850px;
             width: 100%;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--glass-border) inset;
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.05), 0 0 0 1px var(--glass-border) inset;
             animation: fadeInUp 1s ease-out backwards;
             animation-delay: 0.2s;
         }
@@ -160,7 +160,7 @@
             font-weight: 700;
             line-height: 1.1;
             margin-bottom: 1.25rem;
-            color: #fff;
+            color: var(--text-main);
             transition: text-shadow 0.3s ease;
         }
 
@@ -195,7 +195,7 @@
             border-radius: 9999px;
             /* Pill shape */
             font-size: 0.95rem;
-            color: #e2e8f0;
+            color: var(--text-main);
             display: flex;
             align-items: center;
             gap: 0.75rem;
@@ -203,10 +203,10 @@
         }
 
         .module-badge:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.1);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .module-icon {
@@ -231,7 +231,7 @@
         }
 
         .countdown-value {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.35);
             border: 1px solid var(--glass-border);
             border-radius: 1rem;
             width: 100%;
@@ -242,7 +242,7 @@
             font-family: var(--font-display);
             font-size: 2.25rem;
             font-weight: 700;
-            color: #fff;
+            color: var(--primary);
             margin-bottom: 0.75rem;
             transition: all 0.3s ease;
             position: relative;
@@ -302,7 +302,7 @@
 
         .cta-button {
             background: transparent;
-            color: #fff;
+            color: var(--primary);
             font-family: var(--font-sans);
             font-weight: 600;
             font-size: 1rem;
@@ -319,7 +319,8 @@
         .cta-button:hover {
             transform: scale(1.05);
             background: var(--primary);
-            box-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
+            color: #fff;
+            box-shadow: 0 0 25px var(--primary-glow);
         }
 
         /* Notify Form */
@@ -341,9 +342,9 @@
 
         .email-input {
             flex: 1;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.35);
             border: 1px solid var(--glass-border);
-            color: #fff;
+            color: var(--text-main);
             padding: 0.875rem 1.25rem;
             border-radius: 9999px;
             /* match button */
@@ -356,11 +357,11 @@
         .email-input:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 2px var(--primary-glow);
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(255, 255, 255, 0.8);
         }
 
         .email-input::placeholder {
-            color: rgba(255, 255, 255, 0.4);
+            color: var(--text-muted);
         }
 
         .submit-button {
@@ -576,14 +577,14 @@
     <div class="layout-wrapper">
         <!-- Top-left Branding -->
         <header class="header">
-            <div class="brand-logo" aria-label="UMU Unified Booking">UMU Unified Booking</div>
+            <div class="brand-logo" aria-label="Booking@UMU">Booking@UMU</div>
         </header>
 
         <!-- Main Hero Content -->
         <main class="hero-section">
             <div class="glass-card">
 
-                <h1 class="hero-title">Unified Booking for UMU is Coming Soon</h1>
+                <h1 class="hero-title">Booking@UMU is Coming Soon</h1>
                 <p class="hero-subtitle">
                     One platform for room booking, hostel allocation, and hospital services &mdash; built for Uganda
                     Martyrs University and Nkozi Hospital.
@@ -632,9 +633,10 @@
                         Notify Me at Launch
                     </button>
 
-                    <form class="notify-form" id="notify-form" novalidate>
-                        <input type="email" id="email-input" class="email-input" placeholder="Enter your email address"
-                            aria-label="Email address for launch notification" required>
+                    <form class="notify-form" id="notify-form" method="POST" action="/notify.php" novalidate>
+                        <input type="email" id="email-input" name="email" class="email-input"
+                            placeholder="Enter your email address" aria-label="Email address for launch notification"
+                            required>
                         <button type="submit" class="submit-button" aria-label="Submit email">Submit</button>
                     </form>
 
@@ -648,7 +650,7 @@
         <!-- Bottom Text -->
         <footer class="footer">
             <div class="footer-text">
-                <p>Designed and built by UMU Computer Science.</p>
+                <p>Designed and built by UMU Computer Science, Class of 2028.</p>
             </div>
             <div class="footer-text">
                 <p>Running on a Laravel + LEMP stack.</p>
@@ -658,16 +660,15 @@
 
     <script>
         /**
-         * UMU Unified Booking - Coming Soon Scripts
+         * Booking@UMU - Coming Soon Scripts
          * 1. Countdown Logic
          * 2. Notify Me Form Interactions
          * 3. Particles Canvas Implementation
          */
 
         // --- 1. COUNTDOWN LOGIC ---
-        // Set an arbitrary launch date: exactly 90 days from execution
-        const targetDate = new Date();
-        targetDate.setDate(targetDate.getDate() + 90);
+        // Set target date to exactly 30 days after March 7th, 2026
+        const targetDate = new Date('2026-04-06T00:00:00');
 
         // Cache DOM elements
         const uiDays = document.getElementById('val-days');
@@ -752,29 +753,49 @@
         }
 
         // Handle local JS form submission validation
-        notifyForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // prevent reload
+        notifyForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); // stop full page reload
 
             const emailValue = emailField.value.trim();
-            // Basic fallback regex for email validation
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
             if (!emailValue || !emailRegex.test(emailValue)) {
                 displayToast('Please enter a valid email address.', false);
-            } else {
-                // Simulated success logic
+                return;
+            }
+
+            try {
+                const formData = new FormData(notifyForm);
+
+                const response = await fetch('/notify.php', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const text = await response.text();
+
+                if (!response.ok) {
+                    displayToast(text || 'Server error. Please try again.', false);
+                    return;
+                }
+
+                // success branch in your submit handler
                 displayToast('Thanks! We’ll let you know when we launch.', true);
                 notifyForm.reset();
 
                 // Return UI to original button state after showing toast
                 setTimeout(() => {
                     notifyForm.classList.remove('active');
-                    triggerNotifyBtn.textContent = 'Notification Set ✓';
+                    triggerNotifyBtn.textContent = 'Notify Me at Launch';
                     triggerNotifyBtn.style.display = 'inline-block';
                     triggerNotifyBtn.setAttribute('aria-expanded', 'false');
-                }, 1500);
+                }, 3000); // 3s after success (adjust as you like)
+
+            } catch (err) {
+                displayToast('Network error. Please try again.', false);
             }
         });
+
 
 
         // --- 3. PARTICLES CANVAS IMPLEMENTATION ---
@@ -806,11 +827,11 @@
 
                 // Random opacity between 0.1 and 0.4
                 const opacity = (Math.random() * 0.3) + 0.1;
-                // Thematic colors: White, Slate, or Accent Teal
+                // Thematic colors: Primary, Slate, or Accent Teal
                 const palette = [
-                    `rgba(255, 255, 255, ${opacity})`,
-                    `rgba(148, 163, 184, ${opacity})`,
-                    `rgba(14, 165, 233, ${opacity})`
+                    `rgba(37, 99, 235, ${opacity})`, /* Primary */
+                    `rgba(100, 116, 139, ${opacity})`, /* Slate */
+                    `rgba(14, 165, 233, ${opacity})` /* Accent Teal */
                 ];
                 this.color = palette[Math.floor(Math.random() * palette.length)];
             }
